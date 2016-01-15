@@ -12,7 +12,7 @@ import (
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", IndexHandler)
-	router.HandleFunc("/rectangle", RectangleHandler)
+	router.HandleFunc("/v1/rectangle", RectangleHandler)
 	http.Handle("/", router)
 
 	log.Fatal(http.ListenAndServe(":8008", nil))
@@ -21,7 +21,7 @@ func main() {
 // IndexHandler - handles default route
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	w.Write([]byte("Give me a <a href=\"/rectangle\">rectangle.</a>"))
+	w.Write([]byte("Give me a <a href=\"/v1/rectangle\">rectangle.</a>"))
 }
 
 // RectangleHandler - handles rectangle requests
