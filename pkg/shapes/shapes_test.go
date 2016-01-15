@@ -1,4 +1,4 @@
-package main
+package shapes
 
 func ExampleRectangle() {
 	rectangle := Rectangle{3, 4, "myRectangle"}

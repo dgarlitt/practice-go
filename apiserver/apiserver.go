@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/dgarlitt/practice-go/pkg/shapes"
 	"github.com/gorilla/mux"
 )
 
@@ -25,7 +26,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // RectangleHandler - handles rectangle requests
 func RectangleHandler(w http.ResponseWriter, r *http.Request) {
-	rec := Rectangle{3, 4, "generatedRectangle"}
+	rec := shapes.Rectangle{3, 4, "generatedRectangle"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(rec)
 }
