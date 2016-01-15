@@ -8,15 +8,25 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func ExampleRectangle() {
-	rectangle := Rectangle{3, 4, "myRectangle"}
-	rectangle.display()
-	// Output: Length = 3, Width=4, name = myRectangle
+func TestIndexHandlerResponse(t *testing.T) {
+	assert := assert.New(t)
+	request, _ := http.NewRequest("GET", "/", nil)
+	response := httptest.NewRecorder()
+
+	expectedResponseCode := 200
+	expectedResponseHead := "text/html"
+	expectedResponseBody := "Give me a <a href=\"/rectangle\">rectangle.</a>"
+
+	IndexHandler(response, request)
+
+	assert.Equal(expectedResponseCode, response.Code)
+	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
+	assert.Equal(expectedResponseBody, response.Body.String())
 }
 
 func TestRectangleHandlerResponse(t *testing.T) {
 	assert := assert.New(t)
-	request, _ := http.NewRequest("GET", "/", nil)
+	request, _ := http.NewRequest("GET", "/rectangle", nil)
 	response := httptest.NewRecorder()
 
 	expectedResponseCode := 200

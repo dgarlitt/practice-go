@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -11,21 +10,17 @@ import (
 
 func main() {
 	router := mux.NewRouter()
-	router.HandleFunc("/", RectangleHandler)
+	router.HandleFunc("/", IndexHandler)
+	router.HandleFunc("/rectangle", RectangleHandler)
 	http.Handle("/", router)
 
 	log.Fatal(http.ListenAndServe(":8008", nil))
 }
 
-// Rectangle shape definition
-type Rectangle struct {
-	Length, Width int
-	Name          string
-}
-
-func (r Rectangle) display() {
-	fmt.Printf("Length = %d, Width=%d, name = %s", r.Length, r.Width, r.Name)
-	return
+// IndexHandler - handles default route
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	w.Write([]byte("Give me a <a href=\"/rectangle\">rectangle.</a>"))
 }
 
 // RectangleHandler - handles rectangle requests
