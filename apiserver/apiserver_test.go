@@ -15,7 +15,7 @@ func TestIndexHandlerResponse(t *testing.T) {
 
 	expectedResponseCode := 200
 	expectedResponseHead := "text/html"
-	expectedResponseBody := "Give me a <a href=\"/rectangle\">rectangle.</a>"
+	expectedResponseBody := "Give me a <a href=\"/v1/rectangle\">rectangle.</a>"
 
 	IndexHandler(response, request)
 
