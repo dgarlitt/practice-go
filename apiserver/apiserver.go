@@ -26,7 +26,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // RectangleHandler - handles rectangle requests
 func RectangleHandler(w http.ResponseWriter, r *http.Request) {
-	rec := shapes.Rectangle{3, 4, "generatedRectangle"}
+	rec := shapes.Rectangle{Length: 3, Width: 4, Name: "generatedRectangle"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(rec)
 }
