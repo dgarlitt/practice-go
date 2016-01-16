@@ -7,7 +7,6 @@ func ExampleRectangle() {
 }
 
 func ExampleCircle() {
-	circle := Circle{3, 4, "myCircleYo"}
+	circle := Circle{3, 2, "myCircle"}
 	circle.display()
-	// Output: Length = 3, Width=4, name = myRectangle
 }

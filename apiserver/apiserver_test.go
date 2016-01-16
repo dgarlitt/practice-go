@@ -15,7 +15,7 @@ func TestIndexHandlerResponse(t *testing.T) {
 
 	expectedResponseCode := 200
 	expectedResponseHead := "text/html"
-	expectedResponseBody := "Give me a <a href=\"/v1/rectangle\">rectangle.</a>"
+	expectedResponseBody := "Give me a <a href=\"/v1/rectangle\">rectangle.</a><br />Give me a <a href=\"/v1/circle\">circle.</a>"
 
 	IndexHandler(response, request)
 
@@ -34,6 +34,22 @@ func TestRectangleHandlerResponse(t *testing.T) {
 	expectedResponseBody := "{\"Length\":3,\"Width\":4,\"Name\":\"generatedRectangle\"}\n"
 
 	RectangleHandler(response, request)
+
+	assert.Equal(expectedResponseCode, response.Code)
+	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
+	assert.Equal(expectedResponseBody, response.Body.String())
+}
+
+func TestCircleHandlerResponse(t *testing.T) {
+	assert := assert.New(t)
+	request, _ := http.NewRequest("GET", "/circle", nil)
+	response := httptest.NewRecorder()
+
+	expectedResponseCode := 200
+	expectedResponseHead := "application/json"
+	expectedResponseBody := "{\"Length\":3,\"Width\":2,\"Name\":\"generatedCircle\"}\n"
+
+	CircleHandler(response, request)
 
 	assert.Equal(expectedResponseCode, response.Code)
 	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
