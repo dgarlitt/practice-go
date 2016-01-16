@@ -7,7 +7,6 @@ import (
 
 	"github.com/dgarlitt/practice-go/pkg/shapes"
 	"github.com/gorilla/mux"
-	"./pkg"
 )
 
 func main() {
