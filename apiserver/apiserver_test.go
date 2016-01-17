@@ -40,6 +40,22 @@ func TestRectangleHandlerResponse(t *testing.T) {
 	assert.Equal(expectedResponseBody, response.Body.String())
 }
 
+func TestSquareHandlerResponse(t *testing.T) {
+	assert := assert.New(t)
+	request, _ := http.NewRequest("GET", "/rectangle", nil)
+	response := httptest.NewRecorder()
+
+	expectedResponseCode := 200
+	expectedResponseHead := "application/json"
+	expectedResponseBody := "{\"Width\":6,\"Name\":\"generatedSquare\"}\n"
+
+	SquareHandler(response, request)
+
+	assert.Equal(expectedResponseCode, response.Code)
+	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
+	assert.Equal(expectedResponseBody, response.Body.String())
+}
+
 func TestCircleHandlerResponse(t *testing.T) {
 	assert := assert.New(t)
 	request, _ := http.NewRequest("GET", "/circle", nil)
@@ -47,7 +63,7 @@ func TestCircleHandlerResponse(t *testing.T) {
 
 	expectedResponseCode := 200
 	expectedResponseHead := "application/json"
-	expectedResponseBody := "{\"Length\":3,\"Width\":2,\"Name\":\"generatedCircle\"}\n"
+	expectedResponseBody := "{\"Radius\":2,\"Name\":\"generatedCircle\"}\n"
 
 	CircleHandler(response, request)
 

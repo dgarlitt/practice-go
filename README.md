@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dgarlitt/practice-go.svg)](https://travis-ci.org/dgarlitt/practice-go)
+
 # Practicing Golang
 
 ## Install and Run

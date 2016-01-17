@@ -24,7 +24,10 @@ func main() {
 // IndexHandler - handles default route
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	w.Write([]byte("Give me a <a href=\"/v1/rectangle\">rectangle.</a><br />Give me a <a href=\"/v1/circle\">circle.</a>"))
+	outText := "Give me a <a href=\"/v1/rectangle\">rectangle.</a>"
+	outText += "<br />"
+	outText += "Give me a <a href=\"/v1/circle\">circle.</a>"
+	w.Write([]byte(outText))
 }
 
 // RectangleHandler - handles rectangle requests
@@ -36,14 +39,14 @@ func RectangleHandler(w http.ResponseWriter, r *http.Request) {
 
 //SquareHandler - handles square requests
 func SquareHandler(w http.ResponseWriter, r *http.Request) {
-	rec := shapes.Square{Length: 4, Width: 6, Name: "generatedSquare"}
+	rec := shapes.Square{Width: 6, Name: "generatedSquare"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(rec)
 }
 
 //CircleHandler - handles circle requests
 func CircleHandler(w http.ResponseWriter, r *http.Request) {
-	rec := shapes.Circle{Length: 3, Width: 2, Name: "generatedCircle"}
+	rec := shapes.Circle{Radius: 2, Name: "generatedCircle"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(rec)
 }

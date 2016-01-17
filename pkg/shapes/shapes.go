@@ -9,26 +9,28 @@ type Rectangle struct {
 }
 
 func (r Rectangle) display() {
-	fmt.Printf("Length = %d, Width=%d, name = %s", r.Length, r.Width, r.Name)
+	fmt.Printf("Length = %d, Width=%d, Name = %s", r.Length, r.Width, r.Name)
 	return
 }
 
+// Square shape definition
 type Square struct {
-Length, Width int
-Name          string
+	Width int
+	Name  string
 }
 
 func (s Square) display() {
-fmt.Printf("Length = %d, Width=%d, name = %s", s.Length, s.Width, s.Name)
-return
+	fmt.Printf("Width=%d, Name = %s", s.Width, s.Name)
+	return
 }
 
+// Circle shape definition
 type Circle struct {
-	Length, Width int
-	Name          string
+	Radius int
+	Name   string
 }
 
 func (c Circle) display() {
-	fmt.Printf("Length = %d, Width=%d, name = %s", c.Length, c.Width, c.Name)
+	fmt.Printf("Radius=%d, Name = %s", c.Radius, c.Name)
 	return
 }
