@@ -17,7 +17,7 @@ func TestIndexHandlerResponse(t *testing.T) {
 	expectedResponseHead := "text/html"
 	expectedResponseBody := "Give me a <a href=\"/v1/rectangle\">rectangle.</a><br />Give me a <a href=\"/v1/circle\">circle.</a>"
 
-	IndexHandler(response, request)
+	indexHandler(response, request)
 
 	assert.Equal(expectedResponseCode, response.Code)
 	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
@@ -33,7 +33,7 @@ func TestRectangleHandlerResponse(t *testing.T) {
 	expectedResponseHead := "application/json"
 	expectedResponseBody := "{\"Length\":3,\"Width\":4,\"Name\":\"generatedRectangle\"}\n"
 
-	RectangleHandler(response, request)
+	rectangleHandler(response, request)
 
 	assert.Equal(expectedResponseCode, response.Code)
 	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
@@ -49,7 +49,7 @@ func TestSquareHandlerResponse(t *testing.T) {
 	expectedResponseHead := "application/json"
 	expectedResponseBody := "{\"Width\":6,\"Name\":\"generatedSquare\"}\n"
 
-	SquareHandler(response, request)
+	squareHandler(response, request)
 
 	assert.Equal(expectedResponseCode, response.Code)
 	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
@@ -65,7 +65,7 @@ func TestCircleHandlerResponse(t *testing.T) {
 	expectedResponseHead := "application/json"
 	expectedResponseBody := "{\"Radius\":2,\"Name\":\"generatedCircle\"}\n"
 
-	CircleHandler(response, request)
+	circleHandler(response, request)
 
 	assert.Equal(expectedResponseCode, response.Code)
 	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
