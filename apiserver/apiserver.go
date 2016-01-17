@@ -41,7 +41,7 @@ func SquareHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(rec)
 }
 
-//CircleHandler - handles square requests
+//CircleHandler - handles circle requests
 func CircleHandler(w http.ResponseWriter, r *http.Request) {
 	rec := shapes.Circle{Length: 3, Width: 2, Name: "generatedCircle"}
 	w.Header().Set("Content-Type", "application/json")
