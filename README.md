@@ -10,3 +10,5 @@ cd $GOPATH/src/github.com/dgarlitt/practice-go
 go install ./...
 $GOPATH/bin/apiserver
 ```
+
+![Golang Gopher Logo](https://raw.githubusercontent.com/dgarlitt/image-repo/master/tech-logos/golang-gopher.png)
