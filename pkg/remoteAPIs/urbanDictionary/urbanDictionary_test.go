@@ -6,31 +6,42 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 )
 
-var request = struct {
-	path, query       string // request
-	contenttype, body string // response
-}{
-	path:        "/search.json?",
-	query:       "q=%23Kenya",
-	contenttype: "application/json",
-	body:        udResponse,
+type UrbanDictionaryTestSuite struct {
+	suite.Suite
+	FullResponse  string
+	EmptyResponse string
 }
 
-var (
-	udResponse = `{"tags":["tag1","tag2"],"result_type":"exact","list":[{"defid":12345,"word":"fake1","author":"authorone","permalink":"http://wat.urbanup.com/3322419","definition":"Definition number one.","example":"example text one","thumbs_up":3000,"thumbs_down":2000,"current_vote":""},{"defid":67890,"word":"fake2","author":"authortwo","permalink":"http://wat.urbanup.com/1308686","definition":"Definition number two.","example":"example text two","thumbs_up":300,"thumbs_down":250,"current_vote":""}],"sounds":["http://media.urbandictionary.com/sound/fake-111.mp3","http://wav.urbandictionary.com/fake-222.wav"]}`
-)
+func (suite *UrbanDictionaryTestSuite) SetupTest() {
+	suite.FullResponse = `{"tags":["tag1","tag2","tag3"],"result_type":"exact","list":[{"defid":12345,"word":"fake1","author":"authorone","permalink":"http://fakepermalink.com","definition":"Definition number one.","example":"example text one","thumbs_up":3000,"thumbs_down":2000,"current_vote":""},{"defid":67890,"word":"fake2","author":"authortwo","permalink":"http://fakepermalink.com","definition":"Definition number two.","example":"example text two","thumbs_up":300,"thumbs_down":250,"current_vote":""},{"defid":13579,"word":"fake3","author":"authorthree","permalink":"http://fakepermalink.com","definition":"Definition number three.","example":"example text three","thumbs_up":0,"thumbs_down":0,"current_vote":""}],"sounds":["http://media.urbandictionary.com/sound/fake-111.mp3","http://wav.urbandictionary.com/fake-222.wav"]}`
+	suite.EmptyResponse = `{"tags":[],"result_type":"no_results","list":[],"sounds":[]}`
+}
 
-func TestLookupDefinition(t *testing.T) {
-	assert := assert.New(t)
+func (suite *UrbanDictionaryTestSuite) TestLookupDefinitionFull() {
 	expectedWord := "fake2"
 	expectedText := "Definition number two."
+	definition := makeRequest(suite.FullResponse)
 
+	suite.Equal(nil, definition.Error)
+	suite.Equal(expectedWord, definition.Word)
+	suite.Equal(expectedText, definition.Text)
+}
+
+func (suite *UrbanDictionaryTestSuite) TestLookupDefinitionEmpty() {
+	definition := makeRequest(suite.EmptyResponse)
+
+	suite.Equal("No results found for term: \"fake\".", definition.Error.Error())
+	suite.Equal("", definition.Word)
+	suite.Equal("", definition.Text)
+}
+
+func makeRequest(response string) (definition *Definition) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintln(w, udResponse)
+		fmt.Fprintln(w, response)
 	}))
 	defer ts.Close()
 
@@ -39,10 +50,11 @@ func TestLookupDefinition(t *testing.T) {
 
 	c := make(chan *Definition)
 	go LookupDefinition(params, c)
-	definition := <-c
+	definition = <-c
 
-	assert.Equal(nil, definition.Error)
-	assert.Equal(expectedWord, definition.Word)
-	assert.Equal(expectedText, definition.Text)
+	return
+}
 
+func TestUrbanDictionaryTestSuite(t *testing.T) {
+	suite.Run(t, new(UrbanDictionaryTestSuite))
 }

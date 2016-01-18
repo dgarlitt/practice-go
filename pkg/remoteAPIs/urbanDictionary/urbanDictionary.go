@@ -11,13 +11,15 @@ import (
 // It will select the highest ranked definition for a given term
 // from the list of definitions returned by the remote api.
 func LookupDefinition(params *Params, c chan *Definition) (err error) {
-	var results *DictionaryResults
-	var definition = &Definition{}
+	var (
+		results    *DictionaryResults
+		definition = &Definition{}
+	)
 
 	results, err = fetchDefinitions(params)
 
 	if err == nil && results.ResultType != "exact" {
-		err = errors.New("No results found for " + params.Term + ".")
+		err = errors.New("No results found for term: \"" + params.Term + "\".")
 	}
 
 	if err == nil {
