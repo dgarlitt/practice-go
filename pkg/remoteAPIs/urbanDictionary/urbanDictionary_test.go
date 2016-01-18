@@ -37,10 +37,12 @@ func TestLookupDefinition(t *testing.T) {
 	defURL = ts.URL
 	params := &Params{Term: "fake", APIKey: "fakeAPIKey"}
 
-	def, err := LookupDefinition(params)
+	c := make(chan *Definition)
+	go LookupDefinition(params, c)
+	definition := <-c
 
-	assert.Equal(nil, err)
-	assert.Equal(expectedWord, def.Word)
-	assert.Equal(expectedText, def.Text)
+	assert.Equal(nil, definition.Error)
+	assert.Equal(expectedWord, definition.Word)
+	assert.Equal(expectedText, definition.Text)
 
 }

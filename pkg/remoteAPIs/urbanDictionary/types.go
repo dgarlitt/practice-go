@@ -8,8 +8,9 @@ type Params struct {
 
 // Definition is a simple definition
 type Definition struct {
-	Word string
-	Text string
+	Word  string
+	Text  string
+	Error error
 }
 
 // DictionaryResults struct is used for unmarshaling urban dictionary responses

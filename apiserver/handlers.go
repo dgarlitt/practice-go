@@ -20,17 +20,21 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func urbanDictionaryHandler(w http.ResponseWriter, r *http.Request) {
 	var jsonstr []byte
-	vars := mux.Vars(r)
 
+	pathVars := mux.Vars(r)
 	params := &urbanDictionary.Params{
-		Term:   strings.Replace(vars["term"], "-", "%20", -1),
+		Term:   strings.Replace(pathVars["term"], "-", "%20", -1),
 		APIKey: r.URL.Query().Get("api-key"),
 	}
+	c := make(chan *urbanDictionary.Definition)
 
-	dictionary, err := urbanDictionary.LookupDefinition(params)
+	go urbanDictionary.LookupDefinition(params, c)
+
+	definition := <-c
+	err := definition.Error
 
 	if err == nil {
-		jsonstr, err = json.Marshal(dictionary)
+		jsonstr, err = json.Marshal(definition)
 	}
 
 	if err != nil {
