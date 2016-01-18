@@ -71,3 +71,19 @@ func TestCircleHandlerResponse(t *testing.T) {
 	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
 	assert.Equal(expectedResponseBody, response.Body.String())
 }
+
+func TestFileReaderHandlerResponse(t *testing.T) {
+	assert := assert.New(t)
+	request, _ := http.NewRequest("GET", "/fileread", nil)
+	response := httptest.NewRecorder()
+
+	expectedResponseCode := 200
+	expectedResponseHead := "text/plain"
+	expectedResponseBody := "TEXT Generated\n\nthis\nis\nmy\nfile\nthat\nI\ncreated\ntoday\n"
+
+	fileReaderHandler(response, request)
+
+	assert.Equal(expectedResponseCode, response.Code)
+	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
+	assert.Equal(expectedResponseBody, response.Body.String())
+}

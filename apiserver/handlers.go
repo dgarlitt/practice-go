@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"strings"
 
@@ -62,4 +63,11 @@ func circleHandler(w http.ResponseWriter, r *http.Request) {
 	rec := shapes.Circle{Radius: 2, Name: "generatedCircle"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(rec)
+}
+
+func fileReaderHandler(w http.ResponseWriter, r *http.Request) {
+	file, _ := ioutil.ReadFile("file.txt")
+	w.Header().Set("Content-Type", "text/plain")
+	w.Write([]byte("TEXT Generated\n\n"))
+	w.Write([]byte(file))
 }
