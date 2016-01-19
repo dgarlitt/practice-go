@@ -8,9 +8,8 @@ type Params struct {
 
 // Definition is a simple definition
 type Definition struct {
-	Word  string
-	Text  string
-	Error error
+	Word string
+	Text string
 }
 
 // DictionaryResults struct is used for unmarshaling urban dictionary responses
@@ -19,6 +18,7 @@ type DictionaryResults struct {
 	ResultType      string            `json:"result_type"`
 	Sounds          []string          `json:"sounds"`
 	Tags            []string          `json:"tags"`
+	Error           error
 }
 
 // UserDefinition is an individual definition in an urban dictionary response

@@ -27,12 +27,8 @@ func urbanDictionaryHandler(w http.ResponseWriter, r *http.Request) {
 		Term:   strings.Replace(pathVars["term"], "-", "%20", -1),
 		APIKey: r.URL.Query().Get("api-key"),
 	}
-	c := make(chan *urbanDictionary.Definition)
 
-	go urbanDictionary.LookupDefinition(params, c)
-
-	definition := <-c
-	err := definition.Error
+	definition, err := urbanDictionary.LookupDefinition(params)
 
 	if err == nil {
 		jsonstr, err = json.Marshal(definition)

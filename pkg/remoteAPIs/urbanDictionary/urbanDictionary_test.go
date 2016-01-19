@@ -23,34 +23,49 @@ func (suite *UrbanDictionaryTestSuite) SetupTest() {
 func (suite *UrbanDictionaryTestSuite) TestLookupDefinitionFull() {
 	expectedWord := "fake2"
 	expectedText := "Definition number two."
-	definition := makeRequest(suite.FullResponse)
+	definition, err := makeRequest(suite.FullResponse)
 
-	suite.Equal(nil, definition.Error)
+	suite.Equal(nil, err)
 	suite.Equal(expectedWord, definition.Word)
 	suite.Equal(expectedText, definition.Text)
 }
 
 func (suite *UrbanDictionaryTestSuite) TestLookupDefinitionEmpty() {
-	definition := makeRequest(suite.EmptyResponse)
+	definition, err := makeRequest(suite.EmptyResponse)
 
-	suite.Equal("No results found for term: \"fake\".", definition.Error.Error())
+	suite.Equal("No results found for term: \"fake\".", err.Error())
 	suite.Equal("", definition.Word)
 	suite.Equal("", definition.Text)
 }
 
-func makeRequest(response string) (definition *Definition) {
+func (suite *UrbanDictionaryTestSuite) TestLookupDefintionError() {
+	definition, err := makeRequest("error")
+
+	suite.NotNil(err)
+	suite.Equal("", definition.Word)
+	suite.Equal("", definition.Text)
+}
+
+func makeRequest(response string) (definition *Definition, err error) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintln(w, response)
+		if response == "error" {
+			w.WriteHeader(http.StatusBadRequest)
+		} else {
+			w.Header().Set("Content-Type", "application/json")
+			fmt.Fprintln(w, response)
+		}
 	}))
-	defer ts.Close()
+
+	if response == "error" {
+		ts.Listener.Close()
+	} else {
+		defer ts.Close()
+	}
 
 	defURL = ts.URL
 	params := &Params{Term: "fake", APIKey: "fakeAPIKey"}
 
-	c := make(chan *Definition)
-	go LookupDefinition(params, c)
-	definition = <-c
+	definition, err = LookupDefinition(params)
 
 	return
 }
