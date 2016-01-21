@@ -4,11 +4,14 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"os"
+	"path"
 	"strings"
 
 	"github.com/dgarlitt/practice-go/pkg/remoteAPIs/urbanDictionary"
 	"github.com/dgarlitt/practice-go/pkg/shapes"
 	"github.com/gorilla/mux"
+	"github.com/hoisie/mustache"
 )
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
@@ -17,6 +20,13 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	outText += "<br />"
 	outText += "Give me a <a href=\"/v1/circle\">circle.</a>"
 	w.Write([]byte(outText))
+}
+
+func mustacheHandler(w http.ResponseWriter, r *http.Request) {
+	filename := path.Join(path.Join(os.Getenv("PWD"), "apiserver/templates"), "rolliefingers.mustache")
+	data := mustache.RenderFile(filename, map[string]string{"title": "Rollie Fingers", "body": "Check out my 'stache!!!"})
+	w.Header().Set("Content-Type", "text/html")
+	w.Write([]byte(data))
 }
 
 func urbanDictionaryHandler(w http.ResponseWriter, r *http.Request) {

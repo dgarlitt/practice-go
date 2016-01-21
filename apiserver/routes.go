@@ -9,6 +9,7 @@ import (
 func setupRoutes() {
 	router := mux.NewRouter()
 	router.HandleFunc("/", indexHandler)
+	router.HandleFunc("/rolliefingers", mustacheHandler)
 	router.HandleFunc("/definition/{term}", urbanDictionaryHandler)
 	router.HandleFunc("/v1/rectangle", rectangleHandler)
 	router.HandleFunc("/v1/square", squareHandler)
