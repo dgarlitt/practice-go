@@ -12,9 +12,10 @@ import (
 // from the list of definitions returned by the remote api.
 func LookupDefinition(params *Params) (definition *Definition, err error) {
 	definition = &Definition{}
-	c := make(chan *DictionaryResults)
+	c := make(chan *DictionaryResults, 1)
 	go fetchDefinitions(params, c)
 	results := <-c
+	close(c)
 	err = results.Error
 
 	if err == nil && results.ResultType != "exact" {
