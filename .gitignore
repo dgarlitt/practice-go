@@ -1,3 +1,7 @@
+# Godeps
+Godeps/*
+!Godeps/Godeps.json
+
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
