@@ -10,6 +10,9 @@ vendor
 *.a
 *.so
 
+# IDE
+.idea
+
 # Folders
 _obj
 _test

@@ -23,6 +23,14 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(outText))
 }
 
+func fancyPantsHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	filename := path.Join(path.Join(os.Getenv("PWD"), "apiserver/templates"), "index.mustache")
+	data := mustache.RenderFile(filename, map[string]string{"title": "Index", "body": "laser"})
+	w.Header().Set("Content-Type", "text/html")
+	w.Write([]byte(data))
+}
+
 func mustacheHandler(w http.ResponseWriter, r *http.Request) {
 	filename := path.Join(path.Join(os.Getenv("PWD"), config.TemplatePath), "rolliefingers.mustache")
 	data := mustache.RenderFile(filename, map[string]string{"title": "Rollie Fingers", "body": "Check out my 'stache!!!"})

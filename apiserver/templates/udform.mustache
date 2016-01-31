@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style>
+      #ud_term{
+        width:50%;
+      }
+    </style>
+  </head>
+  <body>
+    {{body}}
+    <form role="form">
+      <div class="form-group">
+          <label for="ud_term">Urban Dictionary term:</label>
+          <input type="text" class="form-control" id="ud_term">
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+    <div>{{footer}}
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" />
+    <!-- <link rel="stylesheet" href="static/css/style01.css" /> -->
+  </head>
+  <body>
+<nav class="navbar navbar-inverse">
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="#" id="home">Home <span class="sr-only">(current)</span></a></li>
+      <li><a href="/v1/rectangle" id="rect" class="api-link">rectangle</a></li>
+      <li><a href="/v1/square" id="square" class="api-link">square</a></li>
+    </ul>
+    <form class="navbar-form navbar-left" role="search">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search" id="search_item">
+      </div>
+      <button type="submit" class="btn btn-default submit-me">Submit</button>
+    </form>
+    </div>
+  </nav>
+    <div class="container">
+      <div id="ud_response"></div>
+    </div>
+    <div>
+
+      <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+      <script>
+        $("#home").on('click',function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          $('#ud_response').html('');
+        });
+        $(".api-link").on('click', function(e){
+          e.preventDefault();
+          e.stopPropagation();
+
+          $.ajax({url: $(this).attr("href"), success: function(result){
+            output_string = "Name:&nbsp; <strong>" + result.Name + "</strong><br />";
+            output_string = output_string + "Width:&nbsp; <strong>" + result.Width + "</strong><br />";
+            if(result.Length){
+              output_string = output_string + "Length:&nbsp; <strong>" + result.Length + "</strong><br />";
+            }
+              $('#ud_response').html(output_string);
+             }});
+        });
+        $(".submit-me").click(function(e){
+            e.preventDefault();
+            e.stopPropagation();
+
+            enc_item = $('#search_item').val().replace(' ', '-');
+
+            url = "http://localhost:8008/definition/" + enc_item + "?api-key=CAzbAMFMP3mshgdnaHRWLiMDBqKmp1UYveTjsnbhav2SWB4EOe";
+
+            $.ajax({
+              url: url,
+              success: function(result){
+                the_result = JSON.parse(result);
+                $('#ud_response').html("<strong>" + the_result.Word + "</strong><br />" + the_result.Text);
+            },
+            error: function(error){
+              console.log(error.responseText);
+                $('#ud_response').html("<strong>" + error.responseText + "</strong>" );
+            }
+          });
+        });
+      </script>
+  </body>
+</html>
