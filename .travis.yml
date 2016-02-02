@@ -1,11 +1,22 @@
 language: go
+sudo: false
 go:
-  - 1.4
   - tip
-# install:
+install:
+  - export GO15VENDOREXPERIMENT=1
+  - go get github.com/Masterminds/glide
+  - go get github.com/go-playground/overalls
+  - go get github.com/mattn/goveralls
+  - if ! go get github.com/golang/tools/cmd/cover; then go get golang.org/x/tools/cmd/cover; fi
+script:
+  - $GOPATH/bin/glide install
+  - go test $($GOPATH/bin/glide novendor)
+  - $GOPATH/bin/overalls -project=github.com/dgarlitt/practice-go -covermode=count -ignore=.git,vendor -debug
+after_success:
+  - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci
 #   - go get ./...
 #   - go get golang.org/x/tools/cmd/cover
 #   - go get github.com/mattn/goveralls
 # script:
-#   - go test -v -covermode=count -coverprofile=coverage.out ./...
-#   - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
+#   - $GOPATH/bin/overalls -project=github.com/dgarlitt/practice-go -covermode=count -ignore=.git,vendor -debug
+#   - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci -repotoken $COVERALLS_TOKEN

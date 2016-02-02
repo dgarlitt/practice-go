@@ -14,6 +14,7 @@ func setupRoutes() {
 	router.HandleFunc("/v1/rectangle", rectangleHandler)
 	router.HandleFunc("/v1/square", squareHandler)
 	router.HandleFunc("/v1/circle", circleHandler)
+	router.HandleFunc("/api/v1/jobs", fakeCoverallsHandler)
 
 	http.Handle("/", router)
 }
