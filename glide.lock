@@ -1,0 +1,18 @@
+hash: d7dd69c8cfe0b88d03ed41bda173f269040836281d38dd447ea9897fae93035d
+updated: 2016-02-02T14:16:04.253978821-08:00
+imports:
+- name: github.com/gorilla/context
+  version: 1c83b3eabd45b6d76072b66b746c20815fb2872d
+- name: github.com/gorilla/mux
+  version: 26a6070f849969ba72b72256e9f14cf519751690
+- name: github.com/hoisie/mustache
+  version: af524a16a1b1bd467c342969bf37db23433466c4
+- name: github.com/stretchr/objx
+  version: 1a9d0bb9f541897e62256577b352fdbc1fb4fd94
+- name: github.com/stretchr/testify
+  version: 232e8563676cd15c3a36ba5e675ad4312ac4cb11
+  subpackages:
+  - assert
+  - require
+  - suite
+devImports: []

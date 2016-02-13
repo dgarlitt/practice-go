@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -23,7 +24,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func mustacheHandler(w http.ResponseWriter, r *http.Request) {
-	filename := path.Join(path.Join(os.Getenv("PWD"), "apiserver/templates"), "rolliefingers.mustache")
+	filename := path.Join(path.Join(os.Getenv("PWD"), config.TemplatePath), "rolliefingers.mustache")
 	data := mustache.RenderFile(filename, map[string]string{"title": "Rollie Fingers", "body": "Check out my 'stache!!!"})
 	w.Header().Set("Content-Type", "text/html")
 	w.Write([]byte(data))
@@ -76,4 +77,28 @@ func fileReaderHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 	w.Write([]byte("TEXT Generated\n\n"))
 	w.Write([]byte(file))
+}
+
+func fakeCoverallsHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("############### Headers #################")
+
+	for k, v := range r.Header {
+		fmt.Println(k)
+		fmt.Println(v)
+		fmt.Println("-------------------------------------------")
+	}
+
+	fmt.Println("################ Body ###################")
+	fmt.Println(r.Body)
+
+	fmt.Println("################ Form ###################")
+	fmt.Println(r.FormValue("json_file"))
+	for k, v := range r.Form {
+		fmt.Println(k)
+		fmt.Println(v)
+		fmt.Println("-------------------------------------------")
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write([]byte("{}"))
 }
