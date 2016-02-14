@@ -13,10 +13,4 @@ script:
   - go test $($GOPATH/bin/glide novendor)
   - $GOPATH/bin/overalls -project=github.com/dgarlitt/practice-go -covermode=count -ignore=.git,vendor -debug
 after_success:
-  - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci
-#   - go get ./...
-#   - go get golang.org/x/tools/cmd/cover
-#   - go get github.com/mattn/goveralls
-# script:
-#   - $GOPATH/bin/overalls -project=github.com/dgarlitt/practice-go -covermode=count -ignore=.git,vendor -debug
-#   - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci -repotoken $COVERALLS_TOKEN
+  - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci  
