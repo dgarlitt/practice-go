@@ -1,7 +1,8 @@
 language: go
 sudo: false
 go:
-  - tip
+  - 1.5
+  - 1.6
 install:
   - export GO15VENDOREXPERIMENT=1
   - go get github.com/Masterminds/glide
@@ -13,4 +14,4 @@ script:
   - go test $($GOPATH/bin/glide novendor)
   - $GOPATH/bin/overalls -project=github.com/dgarlitt/practice-go -covermode=count -ignore=.git,vendor -debug
 after_success:
-  - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci  
+  - $GOPATH/bin/goveralls -coverprofile=overalls.coverprofile -service=travis-ci

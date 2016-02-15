@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -14,6 +15,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/hoisie/mustache"
 )
+
+var out io.Writer = os.Stdout
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
@@ -80,23 +83,23 @@ func fileReaderHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func fakeCoverallsHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("############### Headers #################")
+	fmt.Fprint(out, "############### Headers #################")
 
 	for k, v := range r.Header {
-		fmt.Println(k)
-		fmt.Println(v)
-		fmt.Println("-------------------------------------------")
+		fmt.Fprint(out, k)
+		fmt.Fprint(out, v)
+		fmt.Fprint(out, "-------------------------------------------")
 	}
 
-	fmt.Println("################ Body ###################")
-	fmt.Println(r.Body)
+	fmt.Fprint(out, "################ Body ###################")
+	fmt.Fprint(out, r.Body)
 
-	fmt.Println("################ Form ###################")
-	fmt.Println(r.FormValue("json_file"))
+	fmt.Fprint(out, "################ Form ###################")
+	fmt.Fprint(out, r.FormValue("json_file"))
 	for k, v := range r.Form {
-		fmt.Println(k)
-		fmt.Println(v)
-		fmt.Println("-------------------------------------------")
+		fmt.Fprint(out, k)
+		fmt.Fprint(out, v)
+		fmt.Fprint(out, "-------------------------------------------")
 	}
 
 	w.Header().Set("Content-Type", "application/json")

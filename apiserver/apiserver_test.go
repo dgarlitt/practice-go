@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -82,6 +83,25 @@ func TestFileReaderHandlerResponse(t *testing.T) {
 	expectedResponseBody := "TEXT Generated\n\nthis\nis\nmy\nfile\nthat\nI\ncreated\ntoday\n"
 
 	fileReaderHandler(response, request)
+
+	assert.Equal(expectedResponseCode, response.Code)
+	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
+	assert.Equal(expectedResponseBody, response.Body.String())
+}
+
+func TestFakeCoverallsHandler(t *testing.T) {
+	out = &bytes.Buffer{}
+	assert := assert.New(t)
+	request, _ := http.NewRequest("POST", "/api/v1/jobs", nil)
+	response := httptest.NewRecorder()
+
+	request.Header.Set("Content-Type", "application/json")
+
+	expectedResponseCode := 200
+	expectedResponseHead := "application/json"
+	expectedResponseBody := "{}"
+
+	fakeCoverallsHandler(response, request)
 
 	assert.Equal(expectedResponseCode, response.Code)
 	assert.Equal(expectedResponseHead, response.HeaderMap.Get("Content-Type"))
