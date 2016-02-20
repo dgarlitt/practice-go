@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/dgarlitt/practice-go.svg)](https://travis-ci.org/dgarlitt/practice-go)
-[![Coverage Status](https://coveralls.io/repos/github/dgarlitt/practice-go/badge.svg?branch=coverage-fix-attempt)](https://coveralls.io/github/dgarlitt/practice-go?branch=coverage-fix-attempt)
+[![Coverage Status](https://coveralls.io/repos/github/dgarlitt/practice-go/badge.svg?branch=master)](https://coveralls.io/github/dgarlitt/practice-go?branch=master)
 
 # Practicing Golang
 
