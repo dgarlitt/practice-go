@@ -12,3 +12,6 @@ import:
   - assert
   - require
   - suite
+- package: gopkg.in/mgo.v2
+  subpackages:
+  - bson

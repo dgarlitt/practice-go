@@ -1,5 +1,5 @@
-hash: d7dd69c8cfe0b88d03ed41bda173f269040836281d38dd447ea9897fae93035d
-updated: 2016-02-02T14:16:04.253978821-08:00
+hash: 564ccd768d7b1c1df27f0208c7441163ee4e85c776c536025e22d68c735b98fc
+updated: 2016-03-27T22:31:07.106209134-07:00
 imports:
 - name: github.com/gorilla/context
   version: 1c83b3eabd45b6d76072b66b746c20815fb2872d
@@ -15,4 +15,12 @@ imports:
   - assert
   - require
   - suite
+  - http
+  - mock
+- name: gopkg.in/mgo.v2
+  version: b6e2fa371e64216a45e61072a96d4e3859f169da
+  subpackages:
+  - bson
+  - internal/sasl
+  - internal/scram
 devImports: []
